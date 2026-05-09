@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --mf-background: oklch(0.985 0.004 255);
+  --mf-surface: oklch(0.998 0.002 255);
+  --mf-surface-soft: oklch(0.965 0.01 252);
+  --mf-foreground: oklch(0.255 0.028 258);
+  --mf-muted: oklch(0.54 0.018 257);
+  --mf-primary: oklch(0.35 0.07 257);
+  --mf-accent: oklch(0.76 0.028 258);
+  --mf-deep: oklch(0.24 0.045 257);
+  --mf-border: oklch(0.9 0.01 255);
+  --mf-white: oklch(1 0 0);
+  --mf-gradient-hero: linear-gradient(
+    135deg,
+    oklch(0.35 0.07 257) 0%,
+    oklch(0.3 0.058 257) 48%,
+    oklch(0.25 0.04 257) 100%
+  );
+  --mf-gradient-primary: linear-gradient(
+    135deg,
+    oklch(0.37 0.072 257) 0%,
+    oklch(0.29 0.054 257) 100%
+  );
+  --mf-shadow-soft: 0 24px 70px -42px color-mix(in oklab, var(--mf-deep) 45%, transparent);
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background: var(--mf-background);
+  color: var(--mf-foreground);
+  font-family: var(--font-body);
+}
+
+input,
+select,
+textarea {
+  color: var(--mf-foreground);
+  background: var(--mf-surface);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--mf-muted);
+  opacity: 1;
+}
+
+select option {
+  color: var(--mf-foreground);
+  background: var(--mf-surface);
+}
+
+.mf-font-display {
+  font-family: var(--font-display);
+}
+
+.mf-page-bg {
+  background: var(--mf-background);
+}
+
+.mf-surface {
+  background: var(--mf-surface);
+}
+
+.mf-surface-soft {
+  background: var(--mf-surface-soft);
+}
+
+.mf-surface-deep {
+  background: var(--mf-deep);
+}
+
+.mf-gradient-hero {
+  background: var(--mf-gradient-hero);
+}
+
+.mf-gradient-primary {
+  background: var(--mf-gradient-primary);
+}
+
+.mf-text {
+  color: var(--mf-foreground);
+}
+
+.mf-text-muted {
+  color: var(--mf-muted);
+}
+
+.mf-text-primary {
+  color: var(--mf-primary);
+}
+
+.mf-text-on-dark {
+  color: color-mix(in oklab, var(--mf-white) 96%, transparent);
+}
+
+.mf-text-on-dark-muted {
+  color: color-mix(in oklab, var(--mf-white) 76%, transparent);
+}
+
+.mf-border {
+  border-color: var(--mf-border);
+}
+
+.mf-border-soft {
+  border-color: color-mix(in oklab, var(--mf-border) 70%, var(--mf-white));
+}
+
+.mf-border-on-dark {
+  border-color: color-mix(in oklab, var(--mf-white) 12%, transparent);
+}
+
+.mf-shadow-soft {
+  box-shadow: var(--mf-shadow-soft);
+}
+
+.mf-badge {
+  background: color-mix(in oklab, var(--mf-primary) 8%, var(--mf-white));
+  color: var(--mf-primary);
+  border: 1px solid color-mix(in oklab, var(--mf-primary) 12%, var(--mf-white));
+}
+
+.mf-button-primary {
+  background: var(--mf-gradient-primary);
+  color: var(--mf-white);
+}
+
+.mf-button-primary:hover {
+  filter: brightness(1.04);
+}
+
+.mf-button-secondary {
+  background: var(--mf-surface);
+  color: var(--mf-foreground);
+  border: 1px solid var(--mf-border);
+}
+
+.mf-button-secondary:hover {
+  border-color: color-mix(in oklab, var(--mf-primary) 20%, var(--mf-border));
+  color: var(--mf-primary);
+}
+
+.mf-editorial-card {
+  background: var(--mf-surface);
+  border: 1px solid var(--mf-border);
+  box-shadow: var(--mf-shadow-soft);
+}
+
+.mf-editorial-card-soft {
+  background: var(--mf-surface-soft);
+  border: 1px solid var(--mf-border);
+}
+
+.mf-icon-chip {
+  background: color-mix(in oklab, var(--mf-primary) 10%, var(--mf-white));
+  color: var(--mf-primary);
+}
+
+.mf-star-chip {
+  color: color-mix(in oklab, var(--mf-accent) 52%, var(--mf-primary));
+}
+
+.mf-divider {
+  border-color: color-mix(in oklab, var(--mf-border) 80%, var(--mf-white));
+}
+
+.mf-overlay-nav {
+  background: color-mix(in oklab, var(--mf-white) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.mf-section-band {
+  border-top: 1px solid color-mix(in oklab, var(--mf-border) 75%, var(--mf-white));
+}
+
+.mf-balance {
+  text-wrap: balance;
+}
