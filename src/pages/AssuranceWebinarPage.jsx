@@ -181,16 +181,34 @@ function AssuranceWebinarPage() {
 
           <div className="w-full max-w-[460px] self-start justify-self-center">
             <div className="overflow-hidden rounded-[32px] bg-slate-950 shadow-[0_30px_90px_-48px_rgba(15,23,42,0.5)]">
-              <div className="aspect-[9/16] w-full">
-                <iframe
-                  className="h-full w-full"
-                  src="https://www.youtube.com/embed/oXr3HCuE7Vs?autoplay=1&mute=1&playsinline=1&loop=1&playlist=oXr3HCuE7Vs&rel=0"
-                  title="Investing With Assurance 2.0 video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
+              <a
+                href="https://youtube.com/shorts/oXr3HCuE7Vs"
+                target="_blank"
+                rel="noreferrer"
+                className="relative block aspect-[9/16] w-full overflow-hidden"
+              >
+                <img
+                  src={coachPhoto}
+                  alt="Preview for the Investing With Assurance 2.0 coach video"
+                  className="h-full w-full object-cover"
                 />
-              </div>
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.12),rgba(15,23,42,0.42))]" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="flex h-24 w-24 items-center justify-center rounded-full bg-white/92 text-[#23375a] shadow-[0_18px_40px_-24px_rgba(15,23,42,0.45)] transition duration-200 hover:scale-105">
+                    <svg viewBox="0 0 24 24" className="ml-1 h-10 w-10 fill-current" aria-hidden="true">
+                      <path d="M8 6.5v11l9-5.5-9-5.5Z" />
+                    </svg>
+                  </span>
+                </div>
+                <div className="absolute inset-x-0 bottom-0 p-6">
+                  <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/75">
+                    Watch The Video
+                  </p>
+                  <p className="mt-2 text-lg font-semibold leading-7 text-white">
+                    Open the full class intro on YouTube.
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
         </div>
