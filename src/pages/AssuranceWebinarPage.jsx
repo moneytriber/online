@@ -81,6 +81,8 @@ const credentials = [
   '5+ years of experience helping individuals make better financial decisions',
 ]
 
+const PAYSTACK_URL = 'https://paystack.shop/pay/moneytriber'
+
 function updateMetaTag(property, content, attribute = 'name') {
   let tag = document.head.querySelector(`meta[${attribute}="${property}"]`)
 
@@ -157,7 +159,7 @@ function AssuranceWebinarPage() {
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Button as="a" href="#register">
+              <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer">
                 Reserve Your Spot Now
                 <ArrowRight className="h-4 w-4" />
               </Button>
@@ -320,7 +322,7 @@ function AssuranceWebinarPage() {
               </p>
             </div>
 
-            <Button as="a" href="#register" variant="secondary">
+            <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer" variant="secondary">
               Save My Seat
             </Button>
           </div>
@@ -513,52 +515,40 @@ function AssuranceWebinarPage() {
               <p className="mf-text-muted mt-3 text-base leading-8">
                 Live class • Beginner friendly • Limited slots
               </p>
-
-              <form className="mt-8 space-y-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium" htmlFor="name">
-                    Full Name
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    placeholder="Enter your full name"
-                    className="mf-surface w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus:border-current"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium" htmlFor="email">
-                    Email Address
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="mf-surface w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus:border-current"
-                  />
-                </div>
-                <div>
-                  <label className="mb-2 block text-sm font-medium" htmlFor="role">
-                    Category
-                  </label>
-                  <select
-                    id="role"
-                    className="mf-surface w-full rounded-2xl border px-4 py-3 text-sm outline-none transition focus:border-current"
-                    defaultValue=""
-                  >
-                    <option value="" disabled>
-                      Select one
-                    </option>
-                    <option>9–5 Worker</option>
-                    <option>Business Owner</option>
-                    <option>Young Professional</option>
-                    <option>Beginner Investor</option>
-                  </select>
-                </div>
-                <Button as="button" type="submit" className="w-full">
-                  Reserve My Spot
-                </Button>
-              </form>
+              <div className="mt-8 space-y-4">
+                {[
+                  'Secure your seat instantly through Paystack',
+                  'Get immediate access to your class registration',
+                  'Join from anywhere and learn at your own confidence level',
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3">
+                    <span className="mf-badge inline-flex rounded-full p-2">
+                      <Check className="h-4 w-4" />
+                    </span>
+                    <p className="text-base leading-8 text-slate-700">{item}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 rounded-[24px] bg-[#23375a]/5 p-5">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#23375a]/70">
+                  Class Fee
+                </p>
+                <p className="mt-2 text-3xl font-bold tracking-tight text-[#23375a]">
+                  ₦15,000
+                </p>
+                <p className="mt-2 text-sm leading-7 text-slate-600">
+                  Pay once to secure your place in the live class.
+                </p>
+              </div>
+              <Button
+                as="a"
+                href={PAYSTACK_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-8 w-full"
+              >
+                Reserve My Spot
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -579,7 +569,7 @@ function AssuranceWebinarPage() {
             </div>
 
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Button as="a" href="#register">
+              <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer">
                 Reserve My Spot
                 <ArrowRight className="h-4 w-4" />
               </Button>

@@ -22,6 +22,8 @@ const toolItems = [
   },
 ]
 
+const ASSURANCE_PAYSTACK_URL = 'https://paystack.shop/pay/moneytriber'
+
 const socialItems = [
   { label: 'TikTok', href: '#', icon: 'tiktok' },
   { label: 'Facebook', href: '#', icon: 'facebook' },
@@ -144,7 +146,9 @@ function SiteLayout() {
           <div className="hidden items-center gap-3 lg:flex">
             {isAssuranceRoute ? (
               <a
-                href="/webinars/invest-with-assurance-2-0#register"
+                href={ASSURANCE_PAYSTACK_URL}
+                target="_blank"
+                rel="noreferrer"
                 className="rounded-full bg-[#23375a] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1b2b47]"
               >
                 Join Class
@@ -256,7 +260,9 @@ function SiteLayout() {
             <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
               {isAssuranceRoute ? (
                 <a
-                  href="/webinars/invest-with-assurance-2-0#register"
+                  href={ASSURANCE_PAYSTACK_URL}
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex w-full items-center justify-center rounded-full bg-[#23375a] px-5 py-3 font-bold text-white transition hover:bg-[#1b2b47]"
                 >
                   Join Class
