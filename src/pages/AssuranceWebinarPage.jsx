@@ -82,6 +82,7 @@ const credentials = [
 ]
 
 const PAYSTACK_URL = 'https://paystack.shop/pay/moneytriber'
+const META_PIXEL_ID = '1655073878944545'
 
 function updateMetaTag(property, content, attribute = 'name') {
   let tag = document.head.querySelector(`meta[${attribute}="${property}"]`)
@@ -124,6 +125,38 @@ function AssuranceWebinarPage() {
       'A live online class that shows you simple, safe ways to start investing even if you’ve never done it before.',
       'property',
     )
+
+    if (!window.fbq) {
+      window.fbq = function metaPixelProxy(...args) {
+        if (window.fbq.callMethod) {
+          window.fbq.callMethod(...args)
+        } else {
+          window.fbq.queue.push(args)
+        }
+      }
+
+      if (!window._fbq) {
+        window._fbq = window.fbq
+      }
+
+      window.fbq.push = window.fbq
+      window.fbq.loaded = true
+      window.fbq.version = '2.0'
+      window.fbq.queue = []
+
+      const script = document.createElement('script')
+      script.id = 'moneyflex-meta-pixel'
+      script.async = true
+      script.src = 'https://connect.facebook.net/en_US/fbevents.js'
+      document.head.appendChild(script)
+    }
+
+    if (!window.__moneyFlexMetaPixelInitialized) {
+      window.fbq('init', META_PIXEL_ID)
+      window.__moneyFlexMetaPixelInitialized = true
+    }
+
+    window.fbq('track', 'PageView')
   }, [])
 
   return (
@@ -158,7 +191,7 @@ function AssuranceWebinarPage() {
               But your money is not making money for you.
             </p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex max-w-[32rem] flex-col gap-4 sm:flex-row">
               <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer">
                 Reserve Your Spot Now
                 <ArrowRight className="h-4 w-4" />
@@ -168,14 +201,14 @@ function AssuranceWebinarPage() {
               </Button>
             </div>
 
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-              <div className="inline-flex items-center gap-3 rounded-full bg-white px-5 py-3 text-[#23375a] shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)]">
+            <div className="mt-6 max-w-[32rem]">
+              <div className="flex w-full items-center justify-between gap-4 rounded-full bg-white px-5 py-3 text-[#23375a] shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] sm:px-6">
                 <span className="text-sm font-semibold uppercase tracking-[0.18em] text-[#23375a]/70">
                   Class Fee
                 </span>
                 <span className="text-2xl font-bold tracking-tight">₦15,000</span>
               </div>
-              <p className="mf-text-on-dark-muted text-sm font-medium">
+              <p className="mf-text-on-dark-muted mt-4 text-sm font-medium">
                 Limited slots available • Beginner friendly • No prior knowledge needed
               </p>
             </div>
