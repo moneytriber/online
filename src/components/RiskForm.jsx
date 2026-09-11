@@ -20,11 +20,11 @@ function RiskForm({ formData, onChange, onSubmit, submitLabel = 'Evaluate Risk' 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Monthly Income">
           <input
-            type="number"
-            min="0"
+            type="text"
+            inputMode="decimal"
             required
-            value={formData.monthlyIncome}
-            onChange={(event) => onChange('monthlyIncome', event.target.value)}
+            value={formatNumberInput(formData.monthlyIncome)}
+            onChange={(event) => onChange('monthlyIncome', parseNumberInput(event.target.value))}
             className={inputClasses}
             placeholder="5000"
           />
@@ -32,11 +32,11 @@ function RiskForm({ formData, onChange, onSubmit, submitLabel = 'Evaluate Risk' 
 
         <Field label="Monthly Expenses">
           <input
-            type="number"
-            min="0"
+            type="text"
+            inputMode="decimal"
             required
-            value={formData.monthlyExpenses}
-            onChange={(event) => onChange('monthlyExpenses', event.target.value)}
+            value={formatNumberInput(formData.monthlyExpenses)}
+            onChange={(event) => onChange('monthlyExpenses', parseNumberInput(event.target.value))}
             className={inputClasses}
             placeholder="3000"
           />
@@ -46,11 +46,11 @@ function RiskForm({ formData, onChange, onSubmit, submitLabel = 'Evaluate Risk' 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Savings">
           <input
-            type="number"
-            min="0"
+            type="text"
+            inputMode="decimal"
             required
-            value={formData.savings}
-            onChange={(event) => onChange('savings', event.target.value)}
+            value={formatNumberInput(formData.savings)}
+            onChange={(event) => onChange('savings', parseNumberInput(event.target.value))}
             className={inputClasses}
             placeholder="12000"
           />
@@ -114,3 +114,4 @@ function RiskForm({ formData, onChange, onSubmit, submitLabel = 'Evaluate Risk' 
 }
 
 export default RiskForm
+import { formatNumberInput, parseNumberInput } from '../lib/finance'

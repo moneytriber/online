@@ -1,61 +1,110 @@
+import {
+  Activity,
+  ArrowRight,
+  BarChart3,
+  LineChart,
+  PieChart,
+  ShieldCheck,
+} from 'lucide-react'
+import { createElement } from 'react'
 import { Link } from 'react-router-dom'
-import ToolCard from '../components/ToolCard'
-import { tools } from '../data/siteData.jsx'
+import PageIntro from '../components/PageIntro'
+
+const tools = [
+  {
+    title: 'Investor Profile',
+    description: 'Understand how your goals, timeline, liquidity needs, and reaction to market movement shape your investor profile.',
+    to: '/tools/investor-profile',
+    icon: ShieldCheck,
+    action: 'Find my profile',
+    type: 'Assessment',
+  },
+  {
+    title: 'Financial Health',
+    description: 'Measure cash-flow pressure, emergency savings, debt commitments, and income stability in one practical check.',
+    to: '/tools/financial-health',
+    icon: Activity,
+    action: 'Check my health',
+    type: 'Calculator',
+  },
+  {
+    title: 'Net Worth',
+    description: 'Add your assets and liabilities to calculate your current net worth and preserve a snapshot for later review.',
+    to: '/tools/net-worth',
+    icon: BarChart3,
+    action: 'Calculate net worth',
+    type: 'Calculator',
+  },
+  {
+    title: 'Budget Planner',
+    description: 'Create a realistic plan for essentials, lifestyle, goals, debt, and investing before the month begins.',
+    to: '/tools/budget-planner',
+    icon: PieChart,
+    action: 'Plan my budget',
+    type: 'Planner',
+  },
+  {
+    title: 'Investment Tracker',
+    description: 'Record investments, compare contributed capital with current value, and stay ahead of important review dates.',
+    to: '/tools/investment-tracker',
+    icon: LineChart,
+    action: 'Open tracker',
+    type: 'Tracker',
+    featured: true,
+  },
+]
 
 function ToolsPage() {
   return (
-    <div className="space-y-8">
-      <div className="grid gap-5 lg:grid-cols-3">
-        {tools.map((tool) => (
-          <ToolCard key={tool.title} {...tool} />
-        ))}
-      </div>
-
-      <div className="grid gap-5 lg:grid-cols-4">
-        {[
-          ['Net worth tracker', 'Watch your overall financial position improve over time.', '/tools'],
-          ['Budget planner', 'Give every naira or dollar a clear job before it disappears.', '/tools'],
-          ['Investment tracker', 'Stay disciplined by reviewing growth with context.', '/tools'],
-          ['Risk evaluator', 'Assess your exposure with a gated calculator and instant feedback.', '/tools/risk-evaluator'],
-        ].map(([title, text, to]) => (
-          <Link
-            key={title}
-            to={to}
-            className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.35)] transition duration-300 hover:-translate-y-1 hover:border-[#23375a]/25 hover:shadow-[0_24px_90px_-40px_rgba(35,55,90,0.28)]"
-          >
-            <p className="text-lg font-semibold text-slate-950">{title}</p>
-            <p className="mt-3 text-sm leading-7 text-slate-600">{text}</p>
-            <span className="mt-5 inline-flex text-sm font-semibold text-[#23375a]">
-              {to === '/tools/risk-evaluator' ? 'Open submenu' : 'Included in overview'}
-            </span>
-          </Link>
-        ))}
-      </div>
-
-      <div className="rounded-[32px] bg-[linear-gradient(135deg,#23375a_0%,#1b2b47_55%,#0f172a_100%)] p-8 text-white shadow-[0_32px_90px_-38px_rgba(35,55,90,0.55)]">
-        <h2 className="text-3xl font-semibold tracking-tight">
-          Ready to start using the system?
-        </h2>
-        <p className="mt-4 max-w-2xl text-base leading-8 text-white/85">
-          Move from reading about money to managing it with more confidence and
-          less guesswork.
-        </p>
-        <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-          <Link
-            to="/tools/risk-evaluator"
-            className="inline-flex rounded-full bg-white px-6 py-3 font-semibold text-[#23375a] transition hover:bg-slate-100"
-          >
-            Open Risk Evaluator
-          </Link>
-          <Link
-            to="/start"
-            className="inline-flex rounded-full border border-white/20 bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/15"
-          >
-            Go to Start Page
-          </Link>
+    <>
+      <section className="mf-grid-pattern border-b border-[var(--mf-border)] bg-white">
+        <div className="mf-container py-16 sm:py-20">
+          <PageIntro
+            eyebrow="MoneyFlex toolkit"
+            title="Useful answers for your next money decision."
+            description="Start with your investor personality, check your financial foundation, then use the planning and tracking tools to build consistency."
+          />
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section className="mf-section">
+        <div className="mf-container grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {tools.map(({ icon: Icon, ...tool }) => (
+            <Link
+              key={tool.title}
+              to={tool.to}
+              className={`group flex min-h-[310px] flex-col rounded-[28px] border p-7 transition hover:-translate-y-1 ${
+                tool.featured
+                  ? 'border-transparent bg-[var(--mf-primary)] text-white shadow-[0_30px_80px_-45px_rgba(35,55,90,0.8)] md:col-span-2 xl:col-span-1'
+                  : 'border-[var(--mf-border)] bg-white'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <span className={`flex h-12 w-12 items-center justify-center rounded-2xl ${tool.featured ? 'bg-white/10 text-white' : 'bg-[var(--mf-surface-soft)] text-[var(--mf-primary)]'}`}>
+                  {createElement(Icon, { className: 'h-5 w-5' })}
+                </span>
+                <span className={`text-xs font-black uppercase tracking-[0.18em] ${tool.featured ? 'text-white/55' : 'text-slate-400'}`}>{tool.type}</span>
+              </div>
+              <h2 className={`mt-9 text-2xl font-bold ${tool.featured ? 'text-white' : 'text-slate-950'}`}>{tool.title}</h2>
+              <p className={`mt-3 text-sm leading-7 ${tool.featured ? 'text-white/70' : 'text-slate-600'}`}>{tool.description}</p>
+              <span className={`mt-auto inline-flex items-center gap-2 pt-8 text-sm font-bold ${tool.featured ? 'text-white' : 'text-[var(--mf-primary)]'}`}>
+                {tool.action} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-[var(--mf-border)] bg-white">
+        <div className="mf-container flex flex-col gap-6 py-12 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className="text-lg font-bold text-slate-950">Your information stays on this device for now.</p>
+            <p className="mt-2 text-sm leading-6 text-slate-600">Secure account sync is the next infrastructure phase. Do not enter bank passwords or card details into any tool.</p>
+          </div>
+          <Link to="/dashboard" className="mf-action mf-action-secondary shrink-0">View my dashboard</Link>
+        </div>
+      </section>
+    </>
   )
 }
 

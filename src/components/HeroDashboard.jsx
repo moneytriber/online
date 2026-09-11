@@ -15,23 +15,23 @@ function HeroDashboard() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-slate-400">
-              Smart Money Dashboard
+              Your Money Dashboard
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-              Your financial reset starts here
+              One view. Clearer next moves.
             </h2>
           </div>
           <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
-            Live habits
+            Preview
           </div>
         </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <div className="rounded-[28px] bg-white/8 p-5 backdrop-blur">
             <p className="text-sm text-slate-300">Monthly cash flow</p>
-            <p className="mt-3 text-4xl font-semibold">+$2,480</p>
+            <p className="mt-3 text-4xl font-semibold">+₦248k</p>
             <p className="mt-2 text-sm text-emerald-300">
-              +14% improvement from last month
+              Available after planned expenses
             </p>
           </div>
           <div className="rounded-[28px] bg-white/8 p-5 backdrop-blur">
@@ -47,7 +47,7 @@ function HeroDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-slate-500">Wealth momentum</p>
-              <p className="mt-2 text-3xl font-semibold">$84,200</p>
+              <p className="mt-2 text-3xl font-semibold">₦8.42m</p>
             </div>
             <div className="rounded-full bg-emerald-100 px-3 py-2 text-sm font-semibold text-emerald-700">
               +8.4%
@@ -70,11 +70,12 @@ function HeroDashboard() {
             </div>
             <div className="rounded-[24px] bg-slate-50 p-4">
               <p className="text-sm text-slate-500">Investment habit</p>
-              <p className="mt-2 text-xl font-semibold">Auto-funded</p>
+              <p className="mt-2 text-xl font-semibold">Review due</p>
             </div>
           </div>
         </div>
       </div>
+      <p className="relative z-10 mt-4 text-center text-xs text-slate-500">Illustrative dashboard preview</p>
     </div>
   )
 }

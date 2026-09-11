@@ -84,6 +84,14 @@ const credentials = [
 const PAYSTACK_URL = 'https://paystack.shop/pay/moneytriber'
 const META_PIXEL_ID = '1655073878944545'
 
+function trackCheckout() {
+  window.fbq?.('track', 'InitiateCheckout', {
+    content_name: 'Investing With Assurance 2.0',
+    currency: 'NGN',
+    value: 15000,
+  })
+}
+
 function updateMetaTag(property, content, attribute = 'name') {
   let tag = document.head.querySelector(`meta[${attribute}="${property}"]`)
 
@@ -192,7 +200,7 @@ function AssuranceWebinarPage() {
             </p>
 
             <div className="mt-8 flex max-w-[32rem] flex-col gap-4 sm:flex-row">
-              <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer">
+              <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer" onClick={trackCheckout}>
                 Reserve Your Spot Now
                 <ArrowRight className="h-4 w-4" />
               </Button>
@@ -355,7 +363,7 @@ function AssuranceWebinarPage() {
               </p>
             </div>
 
-            <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer" variant="secondary">
+            <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer" onClick={trackCheckout} variant="secondary">
               Save My Seat
             </Button>
           </div>
@@ -578,6 +586,7 @@ function AssuranceWebinarPage() {
                 href={PAYSTACK_URL}
                 target="_blank"
                 rel="noreferrer"
+                onClick={trackCheckout}
                 className="mt-8 w-full"
               >
                 Reserve My Spot
@@ -602,7 +611,7 @@ function AssuranceWebinarPage() {
             </div>
 
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer">
+              <Button as="a" href={PAYSTACK_URL} target="_blank" rel="noreferrer" onClick={trackCheckout}>
                 Reserve My Spot
                 <ArrowRight className="h-4 w-4" />
               </Button>

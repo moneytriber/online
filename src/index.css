@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  font-family: "Hornbill", "Helvetica Neue", Helvetica, Arial, "Segoe UI", sans-serif;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
 html {
@@ -10,6 +12,21 @@ html {
 
 body {
   font-family: inherit;
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes fade-in {

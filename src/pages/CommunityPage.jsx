@@ -1,93 +1,66 @@
+import { ArrowRight, HeartHandshake, MessageCircle, Target, Users } from 'lucide-react'
+import { createElement } from 'react'
 import { Link } from 'react-router-dom'
-import SectionHeader from '../components/SectionHeader'
-import { communityHighlights } from '../data/siteData.jsx'
+import PageIntro from '../components/PageIntro'
+
+const pillars = [
+  { icon: MessageCircle, title: 'Ask without shame', text: 'A healthy money community makes room for honest questions and clear explanations.' },
+  { icon: Target, title: 'Turn learning into action', text: 'Challenges and check-ins connect financial knowledge to the decisions you make each week.' },
+  { icon: Users, title: 'Grow with accountability', text: 'Progress becomes easier to sustain when goals are visible and support is consistent.' },
+]
 
 function CommunityPage() {
   return (
-    <section className="grid gap-6 rounded-[40px] border border-slate-200 bg-white p-8 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.35)] sm:p-10 lg:grid-cols-[0.95fr_1.05fr]">
-      <div>
-        <SectionHeader
-          eyebrow="Community"
-          title="You do not have to figure money out alone."
-          description="MoneyFlex Tribe combines education with belonging so progress feels supported, sustainable, and less overwhelming."
-        />
+    <div>
+      <section className="mf-grid-pattern border-b border-[var(--mf-border)] bg-white">
+        <div className="mf-container py-16 sm:py-20">
+          <PageIntro eyebrow="The MoneyFlex community" title="Better money conversations change what feels possible." description="MoneyFlex Tribe is building a supportive learning community where financial questions become practical next steps, without pressure, jargon, or judgement." />
+        </div>
+      </section>
 
-        <div className="mt-8 space-y-4">
-          {communityHighlights.map((item) => (
-            <div
-              key={item}
-              className="flex items-start gap-4 rounded-[24px] border border-slate-200 bg-slate-50 px-5 py-4"
-            >
-              <div className="mt-1 h-3 w-3 rounded-full bg-[#23375a]" />
-              <p className="text-sm leading-7 text-slate-600">{item}</p>
-            </div>
+      <section className="mf-section">
+        <div className="mf-container grid gap-5 md:grid-cols-3">
+          {pillars.map(({ icon: Icon, title, text }) => (
+            <article key={title} className="mf-panel p-7">
+              {createElement(Icon, { className: 'h-6 w-6 text-[var(--mf-primary)]' })}
+              <h2 className="mt-9 text-xl font-bold text-slate-950">{title}</h2>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{text}</p>
+            </article>
           ))}
         </div>
-      </div>
+      </section>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div className="rounded-[30px] bg-[linear-gradient(180deg,#23375a_0%,#1b2b47_100%)] p-6 text-white">
-          <p className="text-sm uppercase tracking-[0.26em] text-white/80">
-            Member Story
-          </p>
-          <p className="mt-5 text-2xl font-semibold leading-tight">
-            “I finally understand where my money should go every month.”
-          </p>
-          <p className="mt-4 text-sm leading-7 text-white/85">
-            Members use the tribe to replace guilt and confusion with repeatable
-            habits, clear goals, and better conversations.
-          </p>
-        </div>
-
-        <div className="rounded-[30px] border border-slate-200 bg-slate-50 p-6">
-          <p className="text-sm uppercase tracking-[0.26em] text-slate-500">
-            Weekly Rhythm
-          </p>
-          <div className="mt-5 space-y-4">
+      <section className="border-y border-[var(--mf-border)] bg-white">
+        <div className="mf-container grid gap-10 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="mf-kicker">A practical rhythm</p>
+            <h2 className="mf-heading mt-4">Learn. Apply. Review. Repeat.</h2>
+            <p className="mf-copy mt-5">The community experience is designed around useful routines rather than endless information.</p>
+          </div>
+          <div className="space-y-3">
             {[
-              'Monday: Money reset and budget review',
-              'Wednesday: Skill-building mini lessons',
-              'Friday: Wins, questions, and accountability',
-            ].map((item) => (
-              <div key={item} className="rounded-[22px] bg-white p-4 text-sm text-slate-600">
-                {item}
+              ['01', 'Money reset', 'Review the previous period without guilt and identify one priority.'],
+              ['02', 'Focused lesson', 'Understand one financial concept in plain language.'],
+              ['03', 'Action check-in', 'Apply the lesson, record the result, and ask better questions.'],
+            ].map(([number, title, text]) => (
+              <div key={number} className="flex gap-4 rounded-[22px] bg-[var(--mf-surface-soft)] p-5">
+                <span className="text-xs font-black text-[var(--mf-primary)]">{number}</span>
+                <div><h3 className="font-bold text-slate-950">{title}</h3><p className="mt-1 text-sm leading-6 text-slate-600">{text}</p></div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        <div className="rounded-[30px] border border-slate-200 bg-slate-950 p-6 text-white sm:col-span-2">
-          <div className="grid gap-5 sm:grid-cols-3">
-            {[
-              ['4.9/5', 'Average member satisfaction'],
-              ['32', 'Interactive learning sessions per quarter'],
-              ['24h', 'Fast support inside the community'],
-            ].map(([value, label]) => (
-              <div key={value}>
-                <p className="text-3xl font-semibold">{value}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-300">{label}</p>
-              </div>
-            ))}
+      <section className="mf-section">
+        <div className="mf-container overflow-hidden rounded-[32px] bg-[var(--mf-primary)] text-white">
+          <div className="grid gap-8 p-8 sm:p-12 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div><HeartHandshake className="h-7 w-7 text-white/65" /><h2 className="mf-font-display mt-6 text-4xl font-semibold">Start by understanding your own money story.</h2><p className="mt-4 max-w-2xl text-sm leading-7 text-white/70">Use the tools now, then bring clearer questions and goals into every financial conversation.</p></div>
+            <Link to="/tools/investor-profile" className="mf-action bg-white text-[var(--mf-primary)]">Find my profile <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </div>
-
-        <div className="rounded-[30px] border border-slate-200 bg-white p-6 sm:col-span-2">
-          <p className="text-sm uppercase tracking-[0.26em] text-slate-500">
-            Keep going
-          </p>
-          <p className="mt-4 text-lg leading-8 text-slate-600">
-            Community is most powerful when paired with practical systems. That
-            is where the MoneyFlex tools come in.
-          </p>
-          <Link
-            to="/tools"
-            className="mt-6 inline-flex rounded-full bg-[#23375a] px-6 py-3 font-semibold text-white transition hover:bg-[#1b2b47]"
-          >
-            View the Tools
-          </Link>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   )
 }
 
