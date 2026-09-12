@@ -1,4 +1,6 @@
 export const defaultClientProfile = {
+  username: '',
+  publishedUsername: '',
   name: 'MoneyFlex Member',
   headline: 'Building wealth with clarity, structure, and confidence.',
   location: 'Nigeria',
@@ -10,7 +12,8 @@ export const defaultClientProfile = {
 
 export function createPublicProfile(profile, riskProfile, investorKnowledge) {
   return {
-    version: 2,
+    version: 3,
+    username: profile.publishedUsername?.trim() || '',
     name: profile.name.trim() || defaultClientProfile.name,
     headline: profile.headline.trim() || defaultClientProfile.headline,
     location: profile.location.trim(),
@@ -55,7 +58,12 @@ export function decodePublicProfile(value) {
 
 export function getShareUrl(profile) {
   if (typeof window === 'undefined') return ''
-  return `${window.location.origin}/profile?view=${encodePublicProfile(profile)}`
+  if (!profile.username) return ''
+
+  if (window.location.hostname === 'localhost' || window.location.hostname.endsWith('.localhost')) {
+    return `${window.location.origin}/profile/${profile.username}`
+  }
+  return `https://investor.themoneyflextribe.com/${profile.username}`
 }
 
 export function getInitials(name) {

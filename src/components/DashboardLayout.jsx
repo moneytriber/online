@@ -15,6 +15,8 @@ import {
 } from 'lucide-react'
 import { createElement, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { readStorage, storageKeys } from '../lib/finance'
+import { getShareUrl } from '../lib/profile'
 
 const portalNav = [
   { label: 'Overview', to: '/dashboard', icon: LayoutDashboard, end: true },
@@ -43,6 +45,8 @@ const titles = {
 function DashboardLayout() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const clientProfile = readStorage(storageKeys.clientProfile, {})
+  const publicProfileUrl = getShareUrl({ username: clientProfile.publishedUsername })
 
   useEffect(() => {
     document.title = `${titles[location.pathname] ?? 'Client Portal'} | MoneyFlex Tribe`
@@ -83,9 +87,7 @@ function DashboardLayout() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link to="/profile" className="hidden items-center gap-2 rounded-xl border border-white/15 px-4 py-2.5 text-xs font-bold text-white/80 transition hover:bg-white/10 sm:flex">
-            <Globe2 className="h-4 w-4" /> Public profile
-          </Link>
+          {publicProfileUrl ? <a href={publicProfileUrl} target="_blank" rel="noreferrer" className="hidden items-center gap-2 rounded-xl border border-white/15 px-4 py-2.5 text-xs font-bold text-white/80 transition hover:bg-white/10 sm:flex"><Globe2 className="h-4 w-4" /> Public profile</a> : <Link to="/dashboard/profile" className="hidden items-center gap-2 rounded-xl border border-white/15 px-4 py-2.5 text-xs font-bold text-white/80 transition hover:bg-white/10 sm:flex"><Globe2 className="h-4 w-4" /> Create public profile</Link>}
           <Link to="/dashboard/reminders" className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white/70 transition hover:bg-white/10" aria-label="View reminders"><BellRing className="h-4 w-4" /></Link>
           <Link to="/dashboard/profile" className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-xs font-black text-[var(--mf-primary)]" aria-label="Edit client profile">MF</Link>
         </div>

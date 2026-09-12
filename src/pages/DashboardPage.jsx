@@ -46,6 +46,10 @@ function DashboardPage() {
   const firstName = clientProfile.name === defaultClientProfile.name ? 'there' : clientProfile.name.trim().split(/\s+/)[0]
 
   const copyShareLink = async () => {
+    if (!shareUrl) {
+      setCopyNotice('Choose a username')
+      return
+    }
     try {
       await navigator.clipboard.writeText(shareUrl)
       setCopyNotice('Copied')
@@ -91,10 +95,10 @@ function DashboardPage() {
           <Link to="/dashboard/profile" className="mf-action mf-action-secondary px-4 py-2.5 text-sm">Edit profile</Link>
         </div>
         <div className="mt-5 flex flex-col gap-3 rounded-2xl bg-[var(--mf-surface-soft)] p-3 sm:flex-row sm:items-center">
-          <div className="min-w-0 flex-1 truncate px-2 text-xs font-semibold text-slate-500">{shareUrl}</div>
+          <div className="min-w-0 flex-1 truncate px-2 text-xs font-semibold text-slate-500">{shareUrl || 'Choose and publish a username to create your public link.'}</div>
           <div className="flex gap-2">
             <button type="button" onClick={copyShareLink} className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-black text-slate-700 sm:flex-none">{copyNotice === 'Copied' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}{copyNotice || 'Copy'}</button>
-            <a href={shareUrl} target="_blank" rel="noreferrer" className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-black text-slate-700 sm:flex-none"><ExternalLink className="h-4 w-4" /> Visit</a>
+            {shareUrl ? <a href={shareUrl} target="_blank" rel="noreferrer" className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-black text-slate-700 sm:flex-none"><ExternalLink className="h-4 w-4" /> Visit</a> : <Link to="/dashboard/profile" className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-black text-slate-700 sm:flex-none"><ExternalLink className="h-4 w-4" /> Create</Link>}
           </div>
         </div>
       </section>

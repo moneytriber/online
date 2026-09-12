@@ -20,6 +20,17 @@ import ToolsLayout from './pages/ToolsLayout'
 import ToolsPage from './pages/ToolsPage'
 
 function App() {
+  const isInvestorSubdomain = window.location.hostname === 'investor.themoneyflextribe.com'
+
+  if (isInvestorSubdomain) {
+    return (
+      <Routes>
+        <Route path="/:username" element={<PublicProfilePage />} />
+        <Route path="*" element={<PublicProfilePage />} />
+      </Routes>
+    )
+  }
+
   return (
     <Routes>
       <Route path="/dashboard" element={<DashboardLayout />}>
@@ -34,6 +45,7 @@ function App() {
         <Route path="reminders" element={<DashboardRemindersPage />} />
       </Route>
       <Route path="/profile" element={<PublicProfilePage />} />
+      <Route path="/profile/:username" element={<PublicProfilePage />} />
 
       <Route element={<SiteLayout />}>
         <Route path="/" element={<HomePage />} />
