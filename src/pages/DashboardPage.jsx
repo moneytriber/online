@@ -44,8 +44,6 @@ function DashboardPage() {
   const completedTools = [riskProfile, investorKnowledge, health, netWorthData, budget].filter(Boolean).length
   const publicProfile = createPublicProfile(clientProfile, riskProfile, investorKnowledge)
   const shareUrl = getShareUrl(publicProfile)
-  const firstName = clientProfile.name === defaultClientProfile.name ? 'there' : clientProfile.name.trim().split(/\s+/)[0]
-
   const copyShareLink = async () => {
     if (!shareUrl) {
       setCopyNotice('Choose a username')
@@ -77,16 +75,6 @@ function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-      <section className="relative overflow-hidden rounded-[28px] bg-[#11131a] p-7 text-white sm:p-10">
-        <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(115deg,transparent_15%,rgba(80,105,155,.18)_50%,transparent_72%),radial-gradient(circle_at_90%_20%,rgba(92,122,184,.26),transparent_24%)]" />
-        <div className="relative max-w-3xl">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-white/45">Welcome back, {firstName}</p>
-          <h1 className="mf-font-display mt-4 text-4xl font-semibold leading-tight sm:text-5xl">Your money deserves a clear operating system.</h1>
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-white/65">Understand your risk, strengthen your foundation, plan every naira, and review investments without losing sight of the life you are building.</p>
-          <Link to={investorKnowledge ? riskProfile ? '/dashboard/investments' : '/dashboard/risk-profile' : '/dashboard/investor-profile'} className="mt-7 inline-flex items-center gap-2 text-sm font-black text-white">{investorKnowledge ? riskProfile ? 'Review my portfolio' : 'Continue with my risk profile' : 'Start with my investor profile'} <ArrowRight className="h-4 w-4" /></Link>
-        </div>
-      </section>
-
       <GettingStartedWizard />
 
       <section className="mt-6 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
