@@ -18,6 +18,7 @@ import { createElement, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatMoney, readStorage, storageKeys, toNumber } from '../lib/finance'
 import { createPublicProfile, defaultClientProfile, getInitials, getShareUrl } from '../lib/profile'
+import GettingStartedWizard from '../components/GettingStartedWizard'
 
 function DashboardPage() {
   const riskProfile = readStorage(storageKeys.investorProfile, null)
@@ -59,16 +60,16 @@ function DashboardPage() {
   }
 
   const metrics = [
-    { label: 'Risk profile', value: riskProfile?.result?.name ?? 'Not assessed', icon: ShieldCheck, to: '/dashboard/risk-profile' },
     { label: 'Investor profile', value: investorKnowledge?.result?.name ?? 'Not assessed', icon: BookOpen, to: '/dashboard/investor-profile' },
+    { label: 'Risk profile', value: riskProfile?.result?.name ?? 'Not assessed', icon: ShieldCheck, to: '/dashboard/risk-profile' },
     { label: 'Financial health', value: health?.result ? `${health.result.score}/100` : 'Not checked', icon: Activity, to: '/dashboard/financial-health' },
     { label: 'Net worth', value: formatMoney(netWorth), icon: Landmark, to: '/dashboard/net-worth' },
     { label: 'Budget remaining', value: formatMoney(budgetIncome - budgetAllocated), icon: PieChart, to: '/dashboard/budget' },
   ]
 
   const quickActions = [
-    { label: 'Take Risk Profile Calculator', help: 'Understand whether your style is Conservative, Balanced, or Growth.', icon: ShieldCheck, to: '/dashboard/risk-profile' },
     { label: 'Assess My Investor Profile', help: 'Measure your investment experience, knowledge, and decision readiness.', icon: BookOpen, to: '/dashboard/investor-profile' },
+    { label: 'Take Risk Profile Calculator', help: 'Understand whether your style is Conservative, Balanced, or Growth.', icon: ShieldCheck, to: '/dashboard/risk-profile' },
     { label: 'Update Financial Health', help: 'Recheck your resilience after income, debt, or savings changes.', icon: Activity, to: '/dashboard/financial-health' },
     { label: 'Add an Investment', help: 'Track a new holding and schedule its next review date.', icon: LineChart, to: '/dashboard/investments' },
     { label: 'Edit Public Profile', help: 'Choose what your shareable MoneyFlex profile shows.', icon: UserRound, to: '/dashboard/profile' },
@@ -82,9 +83,11 @@ function DashboardPage() {
           <p className="text-xs font-black uppercase tracking-[0.22em] text-white/45">Welcome back, {firstName}</p>
           <h1 className="mf-font-display mt-4 text-4xl font-semibold leading-tight sm:text-5xl">Your money deserves a clear operating system.</h1>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-white/65">Understand your risk, strengthen your foundation, plan every naira, and review investments without losing sight of the life you are building.</p>
-          <Link to={riskProfile ? investorKnowledge ? '/dashboard/investments' : '/dashboard/investor-profile' : '/dashboard/risk-profile'} className="mt-7 inline-flex items-center gap-2 text-sm font-black text-white">{riskProfile ? investorKnowledge ? 'Review my portfolio' : 'Assess my investor knowledge' : 'Start with my risk profile'} <ArrowRight className="h-4 w-4" /></Link>
+          <Link to={investorKnowledge ? riskProfile ? '/dashboard/investments' : '/dashboard/risk-profile' : '/dashboard/investor-profile'} className="mt-7 inline-flex items-center gap-2 text-sm font-black text-white">{investorKnowledge ? riskProfile ? 'Review my portfolio' : 'Continue with my risk profile' : 'Start with my investor profile'} <ArrowRight className="h-4 w-4" /></Link>
         </div>
       </section>
+
+      <GettingStartedWizard />
 
       <section className="mt-6 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">

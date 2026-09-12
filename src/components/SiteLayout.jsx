@@ -10,16 +10,12 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const navItems = [
   { label: 'Home', to: '/' },
-  { label: 'Learn', to: '/learn' },
-  { label: 'Community', to: '/community' },
-  { label: 'Webinar', to: '/webinars/invest-with-assurance-2-0' },
-  { label: 'About', to: '/about' },
 ]
 
 const toolItems = [
   { label: 'Tools overview', to: '/tools', description: 'Choose your next money move.' },
-  { label: 'Risk profile calculator', to: '/tools/risk-calculator', description: 'Discover whether your style is Conservative, Balanced, or Growth.' },
   { label: 'Investor profile', to: '/tools/investor-profile', description: 'Assess your investment experience, knowledge, and decision readiness.' },
+  { label: 'Risk profile calculator', to: '/tools/risk-calculator', description: 'Discover whether your style is Conservative, Balanced, or Growth.' },
   { label: 'Financial health', to: '/tools/financial-health', description: 'Measure your financial resilience today.' },
   { label: 'Net worth', to: '/tools/net-worth', description: 'See what you own minus what you owe.' },
   { label: 'Budget planner', to: '/tools/budget-planner', description: 'Give every naira a clear purpose.' },
@@ -145,7 +141,7 @@ function SiteLayout() {
 
                 <Link to="/dashboard" onClick={closeMenus} className="mf-action ml-2">
                   <BarChart3 className="h-4 w-4" />
-                  My Dashboard
+                  My Dashboard <span className="font-medium opacity-65">(MonieBesty)</span>
                 </Link>
               </div>
 
@@ -173,7 +169,7 @@ function SiteLayout() {
                 ))}
               </nav>
               <div className="border-t border-[var(--mf-border)] pt-4">
-                <p className="mf-kicker">Money tools</p>
+                <Link to="/tools" onClick={closeMenus} className="flex items-center justify-between rounded-2xl bg-[var(--mf-primary)] px-4 py-3 text-sm font-black text-white"><span>Tools</span><ChevronDown className="h-4 w-4" /></Link>
                 <div className="mt-3 grid gap-2 sm:grid-cols-2">
                   {toolItems.slice(1).map((item) => (
                     <Link key={item.to} to={item.to} onClick={closeMenus} className="rounded-2xl bg-[var(--mf-surface-soft)] px-4 py-3 text-sm font-semibold text-[var(--mf-primary)]">
@@ -183,7 +179,7 @@ function SiteLayout() {
                 </div>
               </div>
               <Link to="/dashboard" onClick={closeMenus} className="mf-action w-full">
-                <BarChart3 className="h-4 w-4" /> My Dashboard
+                <BarChart3 className="h-4 w-4" /> My Dashboard <span className="font-medium opacity-65">(MonieBesty)</span>
               </Link>
             </div>
           </div>
