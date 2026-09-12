@@ -14,6 +14,7 @@ const navItems = [
 
 const toolItems = [
   { label: 'Tools overview', to: '/tools', description: 'Choose your next money move.' },
+  { label: 'Results guide', to: '/guide', description: 'Understand every category and your next improvement area.' },
   { label: 'Investor profile', to: '/tools/investor-profile', description: 'Assess your investment experience, knowledge, and decision readiness.' },
   { label: 'Risk profile calculator', to: '/tools/risk-calculator', description: 'Discover whether your style is Conservative, Balanced, or Growth.' },
   { label: 'Financial health', to: '/tools/financial-health', description: 'Measure your financial resilience today.' },
@@ -29,8 +30,9 @@ const pageTitles = {
   '/learn': 'Learn | MoneyFlex Tribe',
   '/community': 'Community | MoneyFlex Tribe',
   '/about': 'About | MoneyFlex Tribe',
-  '/dashboard': 'My Money Dashboard | MoneyFlex Tribe',
+  '/dashboard': 'My Moniebestie | MoneyFlex Tribe',
   '/tools': 'Money Tools | MoneyFlex Tribe',
+  '/guide': 'Calculator Results Guide | MoneyFlex Tribe',
   '/tools/risk-calculator': 'Risk Profile Calculator | MoneyFlex Tribe',
   '/tools/investor-profile': 'Investor Profile | MoneyFlex Tribe',
   '/tools/financial-health': 'Financial Health | MoneyFlex Tribe',
@@ -141,7 +143,7 @@ function SiteLayout() {
 
                 <Link to="/dashboard" onClick={closeMenus} className="mf-action ml-2">
                   <BarChart3 className="h-4 w-4" />
-                  My Dashboard <span className="font-medium opacity-65">(MonieBesty)</span>
+                  My Moniebestie
                 </Link>
               </div>
 
@@ -179,7 +181,7 @@ function SiteLayout() {
                 </div>
               </div>
               <Link to="/dashboard" onClick={closeMenus} className="mf-action w-full">
-                <BarChart3 className="h-4 w-4" /> My Dashboard <span className="font-medium opacity-65">(MonieBesty)</span>
+                <BarChart3 className="h-4 w-4" /> My Moniebestie
               </Link>
             </div>
           </div>

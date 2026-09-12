@@ -106,10 +106,10 @@ function ToolsPage() {
       <section className="border-t border-[var(--mf-border)] bg-white">
         <div className="mf-container flex flex-col gap-6 py-12 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-lg font-bold text-slate-950">Your information stays on this device for now.</p>
-            <p className="mt-2 text-sm leading-6 text-slate-600">Secure account sync is the next infrastructure phase. Do not enter bank passwords or card details into any tool.</p>
+            <p className="text-lg font-bold text-slate-950">Understand your result before making your next move.</p>
+            <p className="mt-2 text-sm leading-6 text-slate-600">The results guide explains every category, what to expect, and practical areas to improve.</p>
           </div>
-          <Link to="/dashboard" className="mf-action mf-action-secondary shrink-0">View my dashboard</Link>
+          <Link to="/guide" className="mf-action mf-action-secondary shrink-0">Read the results guide <ArrowRight className="h-4 w-4" /></Link>
         </div>
       </section>
     </>

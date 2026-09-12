@@ -1,6 +1,7 @@
 import {
   Activity,
   BellRing,
+  BookOpenCheck,
   ChevronLeft,
   Gauge,
   Globe2,
@@ -28,10 +29,11 @@ const portalNav = [
   { label: 'Budget Planner', to: '/dashboard/budget', icon: PieChart },
   { label: 'Investments', to: '/dashboard/investments', icon: LineChart },
   { label: 'Reminders', to: '/dashboard/reminders', icon: BellRing },
+  { label: 'Results Guide', to: '/dashboard/guide', icon: BookOpenCheck },
 ]
 
 const titles = {
-  '/dashboard': 'Dashboard',
+  '/dashboard': 'My Moniebestie',
   '/dashboard/profile': 'My Profile',
   '/dashboard/risk-profile': 'Risk Profile Calculator',
   '/dashboard/investor-profile': 'Investor Profile',
@@ -40,6 +42,7 @@ const titles = {
   '/dashboard/budget': 'Budget Planner',
   '/dashboard/investments': 'Investment Tracker',
   '/dashboard/reminders': 'Reminders',
+  '/dashboard/guide': 'Results Guide',
 }
 
 function DashboardLayout() {
@@ -98,7 +101,7 @@ function DashboardLayout() {
           <div className="mb-6 rounded-2xl bg-[var(--mf-surface-soft)] p-4">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--mf-primary)] text-white"><Gauge className="h-5 w-5" /></span>
-              <div><p className="text-sm font-black text-slate-950">My Money</p><p className="text-xs text-slate-500">Private workspace</p></div>
+              <div><p className="text-sm font-black text-slate-950">My Moniebestie</p><p className="text-xs text-slate-500">Private workspace</p></div>
             </div>
           </div>
           {navigation}
@@ -110,7 +113,7 @@ function DashboardLayout() {
         {mobileOpen ? (
           <div className="fixed inset-0 top-[72px] z-40 bg-slate-950/30 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)}>
             <aside className="h-full w-[min(86vw,320px)] overflow-y-auto bg-white p-5 shadow-2xl" onClick={(event) => event.stopPropagation()}>
-              <p className="mb-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400">My Money</p>
+              <p className="mb-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400">My Moniebestie</p>
               {navigation}
               <Link to="/" className="mt-5 flex items-center gap-3 border-t border-slate-200 px-4 pt-5 text-sm font-bold text-slate-500"><ChevronLeft className="h-4 w-4" /> Back to website</Link>
             </aside>

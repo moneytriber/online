@@ -71,3 +71,8 @@ export async function publishInvestorProfile(username, profile) {
 export async function fetchInvestorProfile(username) {
   return callProfileRpc('get_investor_profile', { p_username: username })
 }
+
+export async function checkUsernameAvailability(username) {
+  const profile = await fetchInvestorProfile(username)
+  return !profile
+}

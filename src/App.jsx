@@ -4,6 +4,7 @@ import DashboardLayout from './components/DashboardLayout'
 import AssuranceWebinarPage from './pages/AssuranceWebinarPage'
 import AboutPage from './pages/AboutPage'
 import BudgetPlannerPage from './pages/BudgetPlannerPage'
+import CalculatorGuidePage from './pages/CalculatorGuidePage'
 import CommunityPage from './pages/CommunityPage'
 import DashboardPage from './pages/DashboardPage'
 import DashboardRemindersPage from './pages/DashboardRemindersPage'
@@ -43,6 +44,7 @@ function App() {
         <Route path="budget" element={<BudgetPlannerPage />} />
         <Route path="investments" element={<InvestmentTrackerPage />} />
         <Route path="reminders" element={<DashboardRemindersPage />} />
+        <Route path="guide" element={<CalculatorGuidePage />} />
       </Route>
       <Route path="/profile" element={<PublicProfilePage />} />
       <Route path="/profile/:username" element={<PublicProfilePage />} />
@@ -53,6 +55,7 @@ function App() {
         <Route path="/learn" element={<LearnPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/community" element={<CommunityPage />} />
+        <Route path="/guide" element={<CalculatorGuidePage />} />
         <Route
           path="/webinars/invest-with-assurance-2-0"
           element={<AssuranceWebinarPage />}

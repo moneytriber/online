@@ -1,8 +1,8 @@
-import { AtSign, Check, Copy, ExternalLink, Eye, Loader2, LockKeyhole, Save, Share2, ShieldCheck, UploadCloud } from 'lucide-react'
-import { useState } from 'react'
+import { AtSign, Check, CheckCircle2, Copy, ExternalLink, Eye, Loader2, LockKeyhole, Save, Share2, ShieldCheck, UploadCloud, XCircle } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { readStorage, storageKeys, writeStorage } from '../lib/finance'
 import { createPublicProfile, defaultClientProfile, getInitials, getShareUrl } from '../lib/profile'
-import { normalizeUsername, publishInvestorProfile, validateUsername } from '../lib/publicProfiles'
+import { checkUsernameAvailability, normalizeUsername, publishInvestorProfile, validateUsername } from '../lib/publicProfiles'
 
 function ClientProfilePage() {
   const riskProfile = readStorage(storageKeys.investorProfile, null)
@@ -10,10 +10,36 @@ function ClientProfilePage() {
   const [profile, setProfile] = useState(() => ({ ...defaultClientProfile, ...readStorage(storageKeys.clientProfile, {}) }))
   const [notice, setNotice] = useState('')
   const [publishState, setPublishState] = useState('idle')
+  const [usernameState, setUsernameState] = useState(profile.publishedUsername ? 'owned' : 'idle')
+  const usernameUnavailable = !profile.publishedUsername && ['idle', 'invalid', 'checking', 'taken', 'error'].includes(usernameState)
   const publicProfile = createPublicProfile(profile, riskProfile, investorKnowledge)
   const shareUrl = getShareUrl(publicProfile)
 
   const update = (key, value) => setProfile((current) => ({ ...current, [key]: value }))
+  const updateUsername = (value) => {
+    const username = normalizeUsername(value)
+    update('username', username)
+    setUsernameState(!username ? 'idle' : validateUsername(username) ? 'invalid' : 'checking')
+  }
+
+  useEffect(() => {
+    if (usernameState !== 'checking' || profile.publishedUsername) return undefined
+    let active = true
+    const timer = window.setTimeout(() => {
+      checkUsernameAvailability(profile.username)
+        .then((available) => {
+          if (active) setUsernameState(available ? 'available' : 'taken')
+        })
+        .catch(() => {
+          if (active) setUsernameState('error')
+        })
+    }, 500)
+
+    return () => {
+      active = false
+      window.clearTimeout(timer)
+    }
+  }, [profile.publishedUsername, profile.username, usernameState])
   const save = () => {
     writeStorage(storageKeys.clientProfile, profile)
     setNotice('Draft saved on this device.')
@@ -38,6 +64,7 @@ function ClientProfilePage() {
       writeStorage(storageKeys.clientProfile, nextProfile)
       setProfile(nextProfile)
       setPublishState('success')
+      setUsernameState('owned')
       setNotice('Your public profile is live.')
       return getShareUrl(nextPublicProfile)
     } catch (error) {
@@ -68,7 +95,7 @@ function ClientProfilePage() {
         </div>
         <div className="flex flex-wrap gap-2">
           {shareUrl ? <a href={shareUrl} target="_blank" rel="noreferrer" className="mf-action mf-action-secondary"><Eye className="h-4 w-4" /> Preview</a> : null}
-          <button type="button" onClick={copyLink} disabled={publishState === 'publishing'} className="mf-action disabled:cursor-wait disabled:opacity-60">{publishState === 'publishing' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Copy className="h-4 w-4" />} Publish and copy link</button>
+          <button type="button" onClick={copyLink} disabled={publishState === 'publishing' || usernameUnavailable} className="mf-action disabled:cursor-not-allowed disabled:opacity-60">{publishState === 'publishing' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Copy className="h-4 w-4" />} Publish and copy link</button>
         </div>
       </div>
 
@@ -80,7 +107,17 @@ function ClientProfilePage() {
           </div>
 
           <div className="mt-6 space-y-5">
-            <label><span className="mf-label">Public username</span><div className="relative"><AtSign className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><input className="mf-input pl-11 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500" value={profile.publishedUsername || profile.username} onChange={(event) => update('username', normalizeUsername(event.target.value))} placeholder="yourname" autoCapitalize="none" autoCorrect="off" disabled={Boolean(profile.publishedUsername)} /></div><span className="mt-2 block text-xs leading-5 text-slate-500">Your link: investor.themoneyflextribe.com/{profile.publishedUsername || profile.username || 'username'}{profile.publishedUsername ? ' · Contact MoneyFlex support to change a published username.' : ''}</span></label>
+            <label>
+              <span className="mf-label">Public username</span>
+              <div className="relative"><AtSign className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-slate-400" /><input className="mf-input mf-username-input disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500" value={profile.publishedUsername || profile.username} onChange={(event) => updateUsername(event.target.value)} placeholder="yourname" autoCapitalize="none" autoCorrect="off" disabled={Boolean(profile.publishedUsername)} /></div>
+              <span className="mt-2 block text-xs leading-5 text-slate-500">Your link: investor.themoneyflextribe.com/{profile.publishedUsername || profile.username || 'username'}{profile.publishedUsername ? ' · Contact MoneyFlex support to change a published username.' : ''}</span>
+              {usernameState === 'checking' ? <span className="mt-2 flex items-center gap-2 text-xs font-bold text-slate-500"><Loader2 className="h-4 w-4 animate-spin" /> Checking availability...</span> : null}
+              {usernameState === 'available' ? <span className="mt-2 flex items-center gap-2 text-xs font-bold text-[var(--mf-success)]"><CheckCircle2 className="h-4 w-4" /> Username is available.</span> : null}
+              {usernameState === 'owned' ? <span className="mt-2 flex items-center gap-2 text-xs font-bold text-[var(--mf-success)]"><CheckCircle2 className="h-4 w-4" /> This username is published and belongs to you.</span> : null}
+              {usernameState === 'taken' ? <span className="mt-2 flex items-center gap-2 text-xs font-bold text-[var(--mf-danger)]"><XCircle className="h-4 w-4" /> Username is already taken.</span> : null}
+              {usernameState === 'invalid' ? <span className="mt-2 flex items-center gap-2 text-xs font-bold text-[var(--mf-danger)]"><XCircle className="h-4 w-4" /> Use 3-30 lowercase letters, numbers, underscores, or hyphens.</span> : null}
+              {usernameState === 'error' ? <span className="mt-2 flex items-center gap-2 text-xs font-bold text-[var(--mf-danger)]"><XCircle className="h-4 w-4" /> Availability could not be checked. Try again.</span> : null}
+            </label>
             <label><span className="mf-label">Display name</span><input className="mf-input" value={profile.name} onChange={(event) => update('name', event.target.value)} placeholder="Your name" /></label>
             <label><span className="mf-label">Headline</span><input className="mf-input" value={profile.headline} onChange={(event) => update('headline', event.target.value)} placeholder="What are you building toward?" /></label>
             <label><span className="mf-label">Location</span><input className="mf-input" value={profile.location} onChange={(event) => update('location', event.target.value)} placeholder="City, Country" /></label>
@@ -100,7 +137,7 @@ function ClientProfilePage() {
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <button type="button" onClick={save} className="mf-action mf-action-secondary"><Save className="h-4 w-4" /> Save draft</button>
-            <button type="button" onClick={publish} disabled={publishState === 'publishing'} className="mf-action disabled:cursor-wait disabled:opacity-60">{publishState === 'publishing' ? <Loader2 className="h-4 w-4 animate-spin" /> : <UploadCloud className="h-4 w-4" />} Publish profile</button>
+            <button type="button" onClick={publish} disabled={publishState === 'publishing' || usernameUnavailable} className="mf-action disabled:cursor-not-allowed disabled:opacity-60">{publishState === 'publishing' ? <Loader2 className="h-4 w-4 animate-spin" /> : <UploadCloud className="h-4 w-4" />} Publish profile</button>
           </div>
           {notice ? <p className={`mt-3 flex items-center justify-center gap-2 text-center text-sm font-semibold ${publishState === 'error' ? 'text-[var(--mf-danger)]' : 'text-[var(--mf-success)]'}`}><Check className="h-4 w-4" /> {notice}</p> : null}
         </section>
