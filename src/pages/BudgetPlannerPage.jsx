@@ -1,6 +1,6 @@
 import { ArrowRight, CheckCircle2, PieChart, RotateCcw, Save } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import GuidedFlow from '../components/GuidedFlow'
 import PageIntro from '../components/PageIntro'
 import { formatMoney, formatNumberInput, parseNumberInput, readStorage, storageKeys, toNumber, writeStorage } from '../lib/finance'
@@ -21,6 +21,7 @@ const steps = [
 const emptyPlan = { income: '', essentials: '', lifestyle: '', goals: '', debt: '', investing: '' }
 
 function BudgetPlannerPage() {
+  const location = useLocation()
   const saved = readStorage(storageKeys.budget, emptyPlan)
   const [plan, setPlan] = useState(saved)
   const [step, setStep] = useState(0)
@@ -31,6 +32,7 @@ function BudgetPlannerPage() {
   const allocated = categories.reduce((sum, [categoryKey]) => sum + toNumber(plan[categoryKey]), 0)
   const remaining = income - allocated
   const canContinue = plan[key] !== '' && toNumber(plan[key]) >= 0 && (key !== 'income' || income > 0)
+  const trackerPath = location.pathname.startsWith('/dashboard') ? '/dashboard/investments' : '/tools/investment-tracker'
 
   const advance = () => {
     if (!canContinue) return
@@ -88,7 +90,7 @@ function BudgetPlannerPage() {
             </div>
             <p className="mt-5 flex gap-2 text-xs leading-6 text-slate-500"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-[var(--mf-primary)]" />Use percentages as a diagnostic, not a rigid rule. Your responsibilities and income pattern matter.</p>
           </div>
-          <Link to="/tools/investment-tracker" className="inline-flex items-center gap-2 text-sm font-bold text-[var(--mf-primary)]">Track planned investments <ArrowRight className="h-4 w-4" /></Link>
+          <Link to={trackerPath} className="inline-flex items-center gap-2 text-sm font-bold text-[var(--mf-primary)]">Track planned investments <ArrowRight className="h-4 w-4" /></Link>
         </aside>
       </div>
     </div>

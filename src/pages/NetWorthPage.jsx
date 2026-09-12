@@ -1,6 +1,6 @@
 import { ArrowDownRight, ArrowRight, ArrowUpRight, CheckCircle2, Landmark, RotateCcw } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import GuidedFlow from '../components/GuidedFlow'
 import PageIntro from '../components/PageIntro'
 import { formatMoney, formatNumberInput, parseNumberInput, readStorage, storageKeys, toNumber, writeStorage } from '../lib/finance'
@@ -28,6 +28,7 @@ const steps = [
 const blankValues = Object.fromEntries(steps.map(({ key }) => [key, '']))
 
 function NetWorthPage() {
+  const location = useLocation()
   const saved = readStorage(storageKeys.netWorth, { values: blankValues, history: [] })
   const [values, setValues] = useState(saved.values ?? blankValues)
   const [history, setHistory] = useState(saved.history ?? [])
@@ -38,6 +39,7 @@ function NetWorthPage() {
   const liabilities = liabilityFields.reduce((sum, [key]) => sum + toNumber(values[key]), 0)
   const netWorth = assets - liabilities
   const canContinue = values[current.key] !== '' && toNumber(values[current.key]) >= 0
+  const trackerPath = location.pathname.startsWith('/dashboard') ? '/dashboard/investments' : '/tools/investment-tracker'
 
   const advance = () => {
     if (!canContinue) return
@@ -95,7 +97,7 @@ function NetWorthPage() {
               </div>
             </div>
           ) : null}
-          <Link to="/tools/investment-tracker" className="inline-flex items-center gap-2 text-sm font-bold text-[var(--mf-primary)]">Track the investments inside your assets <ArrowRight className="h-4 w-4" /></Link>
+          <Link to={trackerPath} className="inline-flex items-center gap-2 text-sm font-bold text-[var(--mf-primary)]">Track the investments inside your assets <ArrowRight className="h-4 w-4" /></Link>
         </aside>
       </div>
     </div>

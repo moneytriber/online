@@ -1,6 +1,6 @@
 import { ArrowRight, Check, CheckCircle2, RotateCcw, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import GuidedFlow from '../components/GuidedFlow'
 import PageIntro from '../components/PageIntro'
 import { readStorage, storageKeys, writeStorage } from '../lib/finance'
@@ -59,11 +59,13 @@ const profiles = {
 const initialAnswers = Object.fromEntries(questions.map((question) => [question.key, '']))
 
 function InvestorProfilePage() {
+  const location = useLocation()
   const saved = readStorage(storageKeys.investorProfile, null)
   const [answers, setAnswers] = useState(saved?.answers ?? initialAnswers)
   const [result, setResult] = useState(saved?.result ?? null)
   const [step, setStep] = useState(0)
   const question = questions[step]
+  const nextPath = location.pathname.startsWith('/dashboard') ? '/dashboard/investor-profile' : '/tools/investor-profile'
 
   const finish = (nextAnswers) => {
     const score = Object.values(nextAnswers).reduce((sum, value) => sum + Number(value), 0)
@@ -87,14 +89,14 @@ function InvestorProfilePage() {
 
   return (
     <div className="mf-container py-12 sm:py-16">
-      <PageIntro eyebrow="Assessment 01" title="Understand your investor profile." description="A guided five-question conversation about your preferences, time horizon, and likely behaviour. Your financial capacity is assessed separately." />
+      <PageIntro eyebrow="Risk profile calculator" title="Understand how much investment risk feels right for you." description="A guided five-question conversation about volatility, time horizon, liquidity, and your likely response to loss. Investment knowledge and financial capacity are assessed separately." />
 
       {result ? (
         <div className="mf-step-enter mx-auto mt-10 max-w-4xl overflow-hidden rounded-[32px] bg-[var(--mf-primary)] text-white shadow-[0_35px_90px_-45px_rgba(35,55,90,0.9)]">
           <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
             <div className="p-8 sm:p-11">
               <ShieldCheck className="h-9 w-9 text-white/70" />
-              <p className="mt-9 text-xs font-black uppercase tracking-[0.22em] text-white/55">Your investor profile</p>
+              <p className="mt-9 text-xs font-black uppercase tracking-[0.22em] text-white/55">Your risk profile</p>
               <h2 className="mf-font-display mt-3 text-4xl font-semibold sm:text-5xl">{result.name}</h2>
               <p className="mt-6 leading-8 text-white/75">{result.summary}</p>
             </div>
@@ -103,14 +105,14 @@ function InvestorProfilePage() {
               <ul className="mt-5 space-y-4">
                 {result.fit.map((item) => <li key={item} className="flex items-start gap-3 text-sm leading-6 text-slate-600"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--mf-primary)]" />{item}</li>)}
               </ul>
-              <Link to="/tools/financial-health" className="mf-action mt-8 w-full">Check my financial capacity <ArrowRight className="h-4 w-4" /></Link>
+              <Link to={nextPath} className="mf-action mt-8 w-full">Assess my investor knowledge <ArrowRight className="h-4 w-4" /></Link>
               <button type="button" onClick={retake} className="mt-4 inline-flex w-full items-center justify-center gap-2 text-sm font-bold text-slate-500 hover:text-[var(--mf-primary)]"><RotateCcw className="h-4 w-4" /> Retake assessment</button>
             </div>
           </div>
         </div>
       ) : (
         <div className="mx-auto mt-10 max-w-3xl">
-          <GuidedFlow step={step} total={questions.length} eyebrow="Investor profile" title={question.label} description={question.help} onBack={() => setStep((current) => Math.max(0, current - 1))} hideNext>
+          <GuidedFlow step={step} total={questions.length} eyebrow="Risk tolerance" title={question.label} description={question.help} onBack={() => setStep((current) => Math.max(0, current - 1))} hideNext>
             <div className="grid gap-3">
               {question.options.map(([label, score]) => {
                 const selected = String(answers[question.key]) === String(score)

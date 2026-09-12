@@ -12,11 +12,19 @@ import PageIntro from '../components/PageIntro'
 
 const tools = [
   {
-    title: 'Investor Profile',
-    description: 'Understand how your goals, timeline, liquidity needs, and reaction to market movement shape your investor profile.',
-    to: '/tools/investor-profile',
+    title: 'Risk Profile Calculator',
+    description: 'Understand how your goals, timeline, liquidity needs, and reaction to market movement shape your risk tolerance.',
+    to: '/tools/risk-calculator',
     icon: ShieldCheck,
-    action: 'Find my profile',
+    action: 'Calculate my risk profile',
+    type: 'Assessment',
+  },
+  {
+    title: 'Investor Profile',
+    description: 'Assess your investment experience, product knowledge, research habits, and readiness to make informed decisions.',
+    to: '/tools/investor-profile',
+    icon: BarChart3,
+    action: 'Assess my investor knowledge',
     type: 'Assessment',
   },
   {
@@ -62,7 +70,7 @@ function ToolsPage() {
           <PageIntro
             eyebrow="MoneyFlex toolkit"
             title="Useful answers for your next money decision."
-            description="Start with your investor personality, check your financial foundation, then use the planning and tracking tools to build consistency."
+            description="Measure your risk tolerance, assess your investment knowledge, check your financial foundation, then plan and track with confidence."
           />
         </div>
       </section>

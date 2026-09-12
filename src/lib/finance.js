@@ -3,7 +3,9 @@ export const storageKeys = {
   budget: 'moneyflex-budget',
   investments: 'moneyflex-investments',
   investorProfile: 'moneyflex-investor-profile',
+  investorKnowledge: 'moneyflex-investor-knowledge',
   financialHealth: 'moneyflex-financial-health',
+  clientProfile: 'moneyflex-client-profile',
 }
 
 export function readStorage(key, fallback) {

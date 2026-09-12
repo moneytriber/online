@@ -18,7 +18,8 @@ const navItems = [
 
 const toolItems = [
   { label: 'Tools overview', to: '/tools', description: 'Choose your next money move.' },
-  { label: 'Investor profile', to: '/tools/investor-profile', description: 'Understand your tolerance for investment risk.' },
+  { label: 'Risk profile calculator', to: '/tools/risk-calculator', description: 'Discover whether your style is Conservative, Balanced, or Growth.' },
+  { label: 'Investor profile', to: '/tools/investor-profile', description: 'Assess your investment experience, knowledge, and decision readiness.' },
   { label: 'Financial health', to: '/tools/financial-health', description: 'Measure your financial resilience today.' },
   { label: 'Net worth', to: '/tools/net-worth', description: 'See what you own minus what you owe.' },
   { label: 'Budget planner', to: '/tools/budget-planner', description: 'Give every naira a clear purpose.' },
@@ -34,6 +35,7 @@ const pageTitles = {
   '/about': 'About | MoneyFlex Tribe',
   '/dashboard': 'My Money Dashboard | MoneyFlex Tribe',
   '/tools': 'Money Tools | MoneyFlex Tribe',
+  '/tools/risk-calculator': 'Risk Profile Calculator | MoneyFlex Tribe',
   '/tools/investor-profile': 'Investor Profile | MoneyFlex Tribe',
   '/tools/financial-health': 'Financial Health | MoneyFlex Tribe',
   '/tools/net-worth': 'Net Worth Calculator | MoneyFlex Tribe',

@@ -22,7 +22,8 @@ const journey = [
 ]
 
 const featuredTools = [
-  { title: 'Investor Profile', text: 'Discover whether your approach is conservative, balanced, or growth focused.', to: '/tools/investor-profile', label: 'Understand my profile' },
+  { title: 'Risk Profile Calculator', text: 'Discover whether your approach is conservative, balanced, or growth focused.', to: '/tools/risk-calculator', label: 'Calculate my risk profile' },
+  { title: 'Investor Profile', text: 'Assess your investment experience, knowledge, research habits, and decision readiness.', to: '/tools/investor-profile', label: 'Assess my knowledge' },
   { title: 'Financial Health', text: 'Check cash flow, savings runway, debt pressure, and financial resilience.', to: '/tools/financial-health', label: 'Check my position' },
   { title: 'Net Worth', text: 'Calculate what you own, what you owe, and the number that matters between them.', to: '/tools/net-worth', label: 'Calculate net worth' },
   { title: 'Investment Tracker', text: 'Record holdings, monitor gains, and stay ahead of contribution and maturity dates.', to: '/tools/investment-tracker', label: 'Track investments' },
@@ -45,7 +46,7 @@ function HomePage() {
               MoneyFlex Tribe combines practical financial education with simple tools that help you understand your position, plan confidently, and track your progress.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link to="/tools/investor-profile" className="mf-action">
+              <Link to="/tools/risk-calculator" className="mf-action">
                 Start with my profile <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/tools" className="mf-action mf-action-secondary">
@@ -100,12 +101,12 @@ function HomePage() {
               <Link
                 key={tool.title}
                 to={tool.to}
-                className={`group relative overflow-hidden rounded-[28px] border p-7 transition hover:-translate-y-1 ${index === 3 ? 'border-transparent bg-[var(--mf-primary)] text-white' : 'border-[var(--mf-border)] bg-white'}`}
+                className={`group relative overflow-hidden rounded-[28px] border p-7 transition hover:-translate-y-1 ${index === featuredTools.length - 1 ? 'border-transparent bg-[var(--mf-primary)] text-white' : 'border-[var(--mf-border)] bg-white'}`}
               >
-                <p className={`text-xs font-black uppercase tracking-[0.2em] ${index === 3 ? 'text-white/60' : 'text-slate-400'}`}>MoneyFlex tool 0{index + 1}</p>
-                <h3 className={`mt-5 text-2xl font-bold ${index === 3 ? 'text-white' : 'text-slate-950'}`}>{tool.title}</h3>
-                <p className={`mt-3 max-w-xl leading-7 ${index === 3 ? 'text-white/75' : 'text-slate-600'}`}>{tool.text}</p>
-                <span className={`mt-7 inline-flex items-center gap-2 text-sm font-bold ${index === 3 ? 'text-white' : 'text-[var(--mf-primary)]'}`}>
+                <p className={`text-xs font-black uppercase tracking-[0.2em] ${index === featuredTools.length - 1 ? 'text-white/60' : 'text-slate-400'}`}>MoneyFlex tool 0{index + 1}</p>
+                <h3 className={`mt-5 text-2xl font-bold ${index === featuredTools.length - 1 ? 'text-white' : 'text-slate-950'}`}>{tool.title}</h3>
+                <p className={`mt-3 max-w-xl leading-7 ${index === featuredTools.length - 1 ? 'text-white/75' : 'text-slate-600'}`}>{tool.text}</p>
+                <span className={`mt-7 inline-flex items-center gap-2 text-sm font-bold ${index === featuredTools.length - 1 ? 'text-white' : 'text-[var(--mf-primary)]'}`}>
                   {tool.label} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </span>
               </Link>

@@ -56,7 +56,7 @@ function CommunityPage() {
         <div className="mf-container overflow-hidden rounded-[32px] bg-[var(--mf-primary)] text-white">
           <div className="grid gap-8 p-8 sm:p-12 lg:grid-cols-[1fr_auto] lg:items-center">
             <div><HeartHandshake className="h-7 w-7 text-white/65" /><h2 className="mf-font-display mt-6 text-4xl font-semibold">Start by understanding your own money story.</h2><p className="mt-4 max-w-2xl text-sm leading-7 text-white/70">Use the tools now, then bring clearer questions and goals into every financial conversation.</p></div>
-            <Link to="/tools/investor-profile" className="mf-action bg-white text-[var(--mf-primary)]">Find my profile <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/tools/risk-calculator" className="mf-action bg-white text-[var(--mf-primary)]">Calculate my risk profile <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </div>
       </section>

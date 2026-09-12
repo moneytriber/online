@@ -1,6 +1,6 @@
 import { Activity, AlertTriangle, ArrowRight, Check, CheckCircle2, RotateCcw } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import GuidedFlow from '../components/GuidedFlow'
 import PageIntro from '../components/PageIntro'
 import { formatMoney, formatNumberInput, parseNumberInput, readStorage, storageKeys, toNumber, writeStorage } from '../lib/finance'
@@ -70,11 +70,13 @@ function evaluateHealth(form) {
 }
 
 function FinancialHealthPage() {
+  const location = useLocation()
   const saved = readStorage(storageKeys.financialHealth, null)
   const [form, setForm] = useState(saved?.form ?? initialForm)
   const [result, setResult] = useState(saved?.result ?? null)
   const [step, setStep] = useState(0)
   const current = steps[step]
+  const nextPath = location.pathname.startsWith('/dashboard') ? '/dashboard/budget' : '/tools/budget-planner'
   const canContinue = current.type !== 'money' || (form[current.key] !== '' && toNumber(form[current.key]) >= 0 && (current.key !== 'income' || toNumber(form.income) > 0))
 
   const finish = (nextForm) => {
@@ -118,7 +120,7 @@ function FinancialHealthPage() {
               <ul className="mt-5 space-y-4">
                 {result.priorities.map((item) => <li key={item} className="flex gap-3 text-sm leading-6 text-slate-600">{result.tone === 'exposed' ? <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--mf-danger)]" /> : <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--mf-success)]" />}{item}</li>)}
               </ul>
-              <Link to="/tools/budget-planner" className="mf-action mt-8 w-full">Turn this into a plan <ArrowRight className="h-4 w-4" /></Link>
+              <Link to={nextPath} className="mf-action mt-8 w-full">Turn this into a plan <ArrowRight className="h-4 w-4" /></Link>
               <button type="button" onClick={retake} className="mt-4 inline-flex w-full items-center justify-center gap-2 text-sm font-bold text-slate-500 hover:text-[var(--mf-primary)]"><RotateCcw className="h-4 w-4" /> Review my answers</button>
             </div>
           </div>
