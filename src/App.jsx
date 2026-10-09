@@ -1,8 +1,10 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import SiteLayout from './components/SiteLayout'
 import DashboardLayout from './components/DashboardLayout'
+import ProtectedRoute from './components/ProtectedRoute'
 import AssuranceWebinarPage from './pages/AssuranceWebinarPage'
 import AboutPage from './pages/AboutPage'
+import AuthPage from './pages/AuthPage'
 import BudgetPlannerPage from './pages/BudgetPlannerPage'
 import CalculatorGuidePage from './pages/CalculatorGuidePage'
 import CommunityPage from './pages/CommunityPage'
@@ -34,7 +36,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route path="/auth" element={<AuthPage />} />
+      <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
         <Route index element={<DashboardPage />} />
         <Route path="profile" element={<ClientProfilePage />} />
         <Route path="risk-profile" element={<InvestorProfilePage />} />

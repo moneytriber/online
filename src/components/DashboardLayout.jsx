@@ -8,6 +8,7 @@ import {
   Landmark,
   LayoutDashboard,
   LineChart,
+  LogOut,
   Menu,
   PieChart,
   ShieldCheck,
@@ -15,9 +16,10 @@ import {
   X,
 } from 'lucide-react'
 import { createElement, useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { readStorage, storageKeys } from '../lib/finance'
 import { getShareUrl } from '../lib/profile'
+import { useAuth } from '../hooks/useAuth'
 
 const portalNav = [
   { label: 'Overview', to: '/dashboard', icon: LayoutDashboard, end: true },
@@ -48,8 +50,17 @@ const titles = {
 function DashboardLayout() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
+  const { user, signOut } = useAuth()
   const clientProfile = readStorage(storageKeys.clientProfile, {})
   const publicProfileUrl = getShareUrl({ username: clientProfile.publishedUsername })
+  const displayName = user?.user_metadata?.full_name || clientProfile.name || user?.email?.split('@')[0] || 'Member'
+  const initials = displayName.trim().split(/\s+/).slice(0, 2).map((part) => part[0]?.toUpperCase()).join('') || 'MF'
+
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/auth', { replace: true })
+  }
 
   useEffect(() => {
     document.title = `${titles[location.pathname] ?? 'Client Portal'} | MoneyFlex Tribe`
@@ -92,7 +103,8 @@ function DashboardLayout() {
         <div className="flex items-center gap-2">
           {publicProfileUrl ? <a href={publicProfileUrl} target="_blank" rel="noreferrer" className="hidden items-center gap-2 rounded-xl border border-white/15 px-4 py-2.5 text-xs font-bold text-white/80 transition hover:bg-white/10 sm:flex"><Globe2 className="h-4 w-4" /> Public profile</a> : <Link to="/dashboard/profile" className="hidden items-center gap-2 rounded-xl border border-white/15 px-4 py-2.5 text-xs font-bold text-white/80 transition hover:bg-white/10 sm:flex"><Globe2 className="h-4 w-4" /> Create public profile</Link>}
           <Link to="/dashboard/reminders" className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white/70 transition hover:bg-white/10" aria-label="View reminders"><BellRing className="h-4 w-4" /></Link>
-          <Link to="/dashboard/profile" className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-xs font-black text-[var(--mf-primary)]" aria-label="Edit client profile">MF</Link>
+          <Link to="/dashboard/profile" className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-xs font-black text-[var(--mf-primary)]" aria-label="Edit client profile">{initials}</Link>
+          <button type="button" onClick={handleSignOut} className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white/70 transition hover:bg-white/10 hover:text-white" aria-label="Sign out"><LogOut className="h-4 w-4" /></button>
         </div>
       </header>
 
@@ -106,6 +118,7 @@ function DashboardLayout() {
           </div>
           {navigation}
           <div className="mt-auto border-t border-slate-200 pt-5">
+            <button type="button" onClick={handleSignOut} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-slate-500 transition hover:bg-red-50 hover:text-red-700"><LogOut className="h-4 w-4" /> Sign out</button>
             <Link to="/" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-slate-500 transition hover:bg-[var(--mf-surface-soft)] hover:text-[var(--mf-primary)]"><ChevronLeft className="h-4 w-4" /> Back to website</Link>
           </div>
         </aside>
@@ -115,6 +128,7 @@ function DashboardLayout() {
             <aside className="h-full w-[min(86vw,320px)] overflow-y-auto bg-white p-5 shadow-2xl" onClick={(event) => event.stopPropagation()}>
               <p className="mb-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400">My Moniebestie</p>
               {navigation}
+              <button type="button" onClick={handleSignOut} className="mt-5 flex w-full items-center gap-3 border-t border-slate-200 px-4 pt-5 text-sm font-bold text-red-700"><LogOut className="h-4 w-4" /> Sign out</button>
               <Link to="/" className="mt-5 flex items-center gap-3 border-t border-slate-200 px-4 pt-5 text-sm font-bold text-slate-500"><ChevronLeft className="h-4 w-4" /> Back to website</Link>
             </aside>
           </div>
