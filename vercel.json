@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/hangout2",
+      "destination": "/hangout2/index.html"
+    },
+    {
+      "source": "/hangout2/",
+      "destination": "/hangout2/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }
